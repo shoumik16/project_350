@@ -4,7 +4,7 @@ export default function Home() {
     
     <div className="w-screen h-screen flex items-center bg-blue-600">
       <div className="text-center w-full">
-        <button className="bg-white p-2 rounded-md">Login</button>
+        <button className="bg-white p-2 rounded-md">Login with google</button>
       </div>
       
     </div>
