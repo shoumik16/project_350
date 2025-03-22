@@ -5,7 +5,7 @@ export default function Home() {
   if(!session)
   {return (
     
-    <div className="w-screen h-screen flex items-center bg-blue-600">
+    <div className="w-screen h-screen flex items-center ">
       <div className="text-center w-full">
         <button className="bg-white p-2 rounded-md" onClick={()=>signIn('google')}>Login with google</button>
       </div>
@@ -14,9 +14,13 @@ export default function Home() {
   )}
   return (
     
-    <div className="bg-blue-600 w-screen h-screen">
+    <div className="bg-blue-900 min-h-screen flex">
       <Nav />
-     logged in {session.user.name}
+      <div className="bg-white flex-grow mt-2 mr-2 mb-2 rounded-lg p-4">
+
+      logged in with  {session.user.name}
+      </div>
+    
       
     </div>
   );
