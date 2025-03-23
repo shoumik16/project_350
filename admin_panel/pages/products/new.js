@@ -5,11 +5,11 @@ export default function NewProduct()
 {   
     const [name,setName]=useState('')
     const [about,setAbout]=useState('')
-    const [number,setNumber]=useState('')
+    const [price,setPrice]=useState('')
     async function f(ev)
      {     
         ev.preventDefault()
-           const productInfo={name,about,number}
+           const productInfo={name,about,price}
            await axios.post('/api/products',productInfo)
      }
 
@@ -22,7 +22,7 @@ export default function NewProduct()
             <label>about</label>
             <textarea placeholder="descripion" value={about} onChange={ev=>setAbout(ev.target.value)}/>
             <label> price</label>
-            <input type="number" placeholder="price" value={number} onChange={ev=>setNumber(ev.target.value)}/>
+            <input type="number" placeholder="price" value={price} onChange={ev=>setPrice(ev.target.value)}/>
             <button className="btn">Save It</button>
             </form>
         </Layout>
