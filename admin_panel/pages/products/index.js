@@ -6,7 +6,7 @@ export default function Products()
     <Layout>
       <div>
       <Link  href='/products/new' legacyBehavior>
-        <a>add new product</a>
+        <a className="btn">add new product</a>
         </Link>
       </div>
         
