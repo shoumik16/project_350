@@ -16,7 +16,20 @@ export default async function handle(req,res)
          res.status(200).json(data)
     }  
     if(method==='GET')
+        {
+        if(req.query?.id)
+        {
+          res.json(await Product.findOne({_id:req.query.id}))
+        }
+        else
        {
         res.json(await Product.find())
        }
+    }
+    if(method==='PUT')
+    {
+        const {name,about,price,_id} =req.body
+        await Product.updateOne({_id},{name,about,price})
+        res.json(true)
+    }
  }
