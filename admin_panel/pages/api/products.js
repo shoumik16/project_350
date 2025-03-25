@@ -14,6 +14,9 @@ export default async function handle(req,res)
 
          )
          res.status(200).json(data)
-    }
- 
-}
+    }  
+    if(method==='GET')
+       {
+        res.json(await Product.find())
+       }
+ }
