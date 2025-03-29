@@ -5,7 +5,7 @@ export default function Productform({
   _id,
   name:existingName,
   about:existingAbout,
-  price:existingPrice
+  price:existingPrice,
 
 })
 {   
@@ -34,6 +34,7 @@ export default function Productform({
      {
      router.push('/products')
      }
+     
 
     return (
       
