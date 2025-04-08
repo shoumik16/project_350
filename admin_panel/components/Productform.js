@@ -1,6 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
+import Spinners from "@/components/Spinners"; // Adjust the path based on your project structure
+
 export default function Productform({
   _id,
   name:existingName,
@@ -14,6 +16,7 @@ export default function Productform({
     const [price,setPrice]=useState(existingPrice || '')
     const [images,setImage]=useState(existingImage || [])
     const [goproduct,setGoproduct]=useState(false)
+    const [uploading,setUpload]=useState(false)
     const router=useRouter()
     async function f(ev)
      {     
@@ -39,7 +42,8 @@ export default function Productform({
      {
         const files=ev.target?.files
         if(files?.length>0)
-        {  
+        { 
+          setUpload(true)
           const data = new FormData()
           for(const file of files)
           {
@@ -49,6 +53,7 @@ export default function Productform({
           setImage(im=>{
             return [...im,...res.data.urls]
           })
+          setUpload(false)
          }
      }
 
@@ -68,6 +73,13 @@ export default function Productform({
               <img src={l} alt=""/>
               </div>
           ))}
+           {
+            uploading&&(
+              <div className="h-24">
+                <Spinners />
+                </div>
+            )
+          }
         <label className=" w-24 h-24 border bg-gray-500 text-center flex items-center justify-center gap-1">
   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6">
     <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15" />
