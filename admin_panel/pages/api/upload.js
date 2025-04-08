@@ -25,18 +25,19 @@ export default async function handle(req, res) {
     }
     try {
      
-      const uploadedFiles = [];
-           const file = Array.isArray(files.file) ? files.file[0] : files.file; // Check if it's an array
-           const filePath = file.path;
-        const uploadResponse = await cloudinary.v2.uploader.upload(filePath, {
-          folder: 'your_folder_name', // Optional: Specify the folder where the file will be uploaded
-          resource_type: 'auto', // Automatically determine the file type (image, video, etc.)
-        });
-
-        console.log('Cloudinary upload response:', uploadResponse);
-        uploadedFiles.push(uploadResponse.secure_url); // Store the secure URL of the uploaded file
       
-
+      const filesArray = Array.isArray(files.file) ? files.file : [files.file];
+      const uploadPromises = filesArray.map(file =>
+        cloudinary.v2.uploader.upload(file.path, {
+          folder: 'your_folder_name',
+          resource_type: 'image',
+          transformation: [{ width: 1024, crop: "limit" }],
+        })
+      );
+      
+      const uploadResponses = await Promise.all(uploadPromises);
+      const uploadedFiles = uploadResponses.map(response => response.secure_url);
+      
       // Send back Cloudinary URLs (for each uploaded file)
       res.json({
         message: 'Files uploaded successfully',
