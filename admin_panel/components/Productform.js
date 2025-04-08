@@ -39,7 +39,7 @@ export default function Productform({
      {
         const files=ev.target?.files
         if(files?.length>0)
-        {
+        {  
           const data = new FormData()
           for(const file of files)
           {
@@ -49,7 +49,7 @@ export default function Productform({
           setImage(im=>{
             return [...im,...res.data.urls]
           })
-        }
+         }
      }
 
      
