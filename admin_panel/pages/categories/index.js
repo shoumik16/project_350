@@ -7,7 +7,7 @@ export default function categories()
 {   
     const[name,setName] = useState('')
     const[cat,setCat] =useState([])
-
+    const[parent,setParent]=useState('')
     useEffect(()=>{
         f1()
      },[])
@@ -20,7 +20,8 @@ export default function categories()
     }
     async function  f(ev) {
         ev.preventDefault()
-        await axios.post('/api/cat',{name})
+        const res=await axios.post('/api/cat',{name,parent})
+        console.log(res)
         f1()
     }
     return (
@@ -31,13 +32,21 @@ export default function categories()
             <form className="flex gap-1" onSubmit={f}>
                 <input className="mb-0"  type="text" placeholder={'Category Name'}
                 onChange={ev=>setName(ev.target.value)} value={name}/>
-                <select className="mb-0">
+
+
+                <select className="mb-0"   onChange={ev=>setParent(ev.target.value)} value={parent}>
+                  
+                   
+                    <option value="">No Parent Category</option>
                 {cat.length >0 && cat.map(x =>(
                         <option value={x._id}>
                             {x.name}
                         </option>
                     ))} 
                 </select>
+
+
+
                 <button type="submit" className="btn">
                     save
                 </button>
