@@ -1,7 +1,8 @@
-import { model,Schema,models } from "mongoose";
+import mongoose,{ model,Schema,models } from "mongoose";
 
 const catSchema = new Schema({
     name:{type:String,required:true},
+    parentcat:{type:mongoose.Types.ObjectId}
     
 })
 

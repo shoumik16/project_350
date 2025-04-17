@@ -12,9 +12,11 @@ const {method}=req
 
 if(method==='POST')
 {
-    const {name} =req.body
+    const {name,parent} =req.body
+    console.log("xxxxx")
+    console.log(parent)
     const data=await Cat.create({
-        name
+        name,parentcat:parent
     })
     res.json(data)
 }
