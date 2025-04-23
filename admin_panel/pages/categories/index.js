@@ -26,6 +26,12 @@ export default function categories()
             setCat(res.data)
     })
     }
+    async function deletecat(x)
+    {
+        const{_id}=x
+        await axios.delete('/api/cat?_id='+_id)
+        f1()
+    }
     async function  f(ev) {
         ev.preventDefault()
         const data={name,parent}
@@ -35,11 +41,17 @@ export default function categories()
             const res=await axios.put('/api/cat',data)
             console.log(res)
             f1()
+            setEdited('')
+            setParent('')
+            setName('')
+
         }
         else
         {
         const res=await axios.post('/api/cat',{name,parent})
         console.log(res)
+        setParent('')
+            setName('')
         f1()
         }
     }
@@ -76,7 +88,7 @@ export default function categories()
                 <tr>
                     <td>Category</td>
                     <td>Parent Category</td>
-                    <td>edit</td>
+                    <td>Option</td>
                 </tr>
               </thead>
               <tbody>
@@ -88,7 +100,7 @@ export default function categories()
                             <button className="btn" onClick={()=>edit(x)}>
                                 Edit
                             </button>
-                            <button className="btn">
+                            <button className="btn" onClick={()=>deletecat(x)}>
                                 Delete
                             </button>
                            </td>

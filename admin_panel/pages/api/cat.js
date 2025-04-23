@@ -36,5 +36,11 @@ const data = await Cat.updateOne({_id},newCat);
 res.json(data);
 
 }
+if(method==='DELETE')
+{
+   const {_id}=req.query
+   await Cat.deleteOne({_id})
+   res.json('ok')
+}
 
 }
