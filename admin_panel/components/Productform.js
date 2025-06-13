@@ -2,13 +2,14 @@ import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import Spinners from "@/components/Spinners"; // Adjust the path based on your project structure
-
+import { useEffect } from "react";
 export default function Productform({
   _id,
   name:existingName,
   about:existingAbout,
   price:existingPrice,
-  images:existingImage
+  images:existingImage,
+  category:existingCategory
 })
 {   
     const [name,setName]=useState(existingName || '')
@@ -17,18 +18,29 @@ export default function Productform({
     const [images,setImage]=useState(existingImage || [])
     const [goproduct,setGoproduct]=useState(false)
     const [uploading,setUpload]=useState(false)
+    const[category,setCategory]=useState(existingCategory || '')
+    const[categories,setCategories]=useState([])
     const router=useRouter()
+    useEffect(()=>{
+         axios.get('/api/cat').then(res =>{
+                    
+                     setCategories(res.data)
+             })
+    },[])
     async function f(ev)
      {     
         ev.preventDefault()
-           const productInfo={name,about,price,images}
+           const productInfo={name,about,price,images,category}
+          
            if(_id)
            {
-            await axios.put('/api/products',{...productInfo,_id})
+            await axios.put('/api/products',{...productInfo,_id,category})
            }
            else
            {
-            await axios.post('/api/products',productInfo)
+            await axios.post('/api/products',productInfo).then(res=>{
+              console.log(res.data)
+            })
             
            }
            setGoproduct(true)
@@ -67,6 +79,7 @@ export default function Productform({
         <label>
           Photos
         </label>
+       
         <div className="mb-2 flex gap-2">
         {!!images?.length && images.map(l => (
             <div key={l} className="h-24">
@@ -92,7 +105,19 @@ export default function Productform({
             No Photo
             </div>)}
         </div>
-
+        <label>
+          Add Category
+        </label>
+        <select value={category} onChange={ev=>setCategory(ev.target.value)}>
+          
+        <option value="">No Category</option>
+                {categories.length >0 && categories.map(x =>(
+                        <option value={x._id}>
+                            {x.name}
+                        </option>
+                    ))} 
+        </select>
+          
         <label>about</label>
         <textarea placeholder="descripion" value={about} onChange={ev=>setAbout(ev.target.value)}/>
         <label> price</label>
