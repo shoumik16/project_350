@@ -9,7 +9,8 @@ export default function Productform({
   about:existingAbout,
   price:existingPrice,
   images:existingImage,
-  category:existingCategory
+  category:existingCategory,
+   productProperties:assignedProps,
 })
 {   
     const [name,setName]=useState(existingName || '')
@@ -20,6 +21,7 @@ export default function Productform({
     const [uploading,setUpload]=useState(false)
     const[category,setCategory]=useState(existingCategory || '')
     const[categories,setCategories]=useState([])
+     const [productProperties,setProductProperties] = useState(assignedProps || {});
     const router=useRouter()
     useEffect(()=>{
          axios.get('/api/cat').then(res =>{
@@ -27,10 +29,29 @@ export default function Productform({
                      setCategories(res.data)
              })
     },[])
-    async function f(ev)
+     const prf = [];
+  if (categories.length > 0 && category) {
+    let Info = categories.find(({_id}) => _id === category);
+    prf.push(...Info.feat)
+     while(Info?.parentcat?._id) {
+      const pc = categories.find(({_id}) => _id === Info?.parentcat?._id);
+      prf.push(...pc.feat);
+      Info = pc;
+    }
+    
+  }
+  function setProductProp(propName,value) {
+    setProductProperties(prev => {
+      const newProductProps = {...prev};
+      newProductProps[propName] = value;
+      return newProductProps;
+    });
+    console.log(productProperties)
+  }
+    async function f(ev) 
      {     
         ev.preventDefault()
-           const productInfo={name,about,price,images,category}
+           const productInfo={name,about,price,images,category,productProperties}
           
            if(_id)
            {
@@ -39,7 +60,7 @@ export default function Productform({
            else
            {
             await axios.post('/api/products',productInfo).then(res=>{
-              console.log(res.data)
+              console.log(res.data)                                  
             })
             
            }
@@ -117,7 +138,26 @@ export default function Productform({
                         </option>
                     ))} 
         </select>
-          
+          {
+            prf.length > 0 && prf.map(p => (
+          <div key={p.Name} className="">
+            <label>{p.Name[0].toUpperCase()+p.Name.substring(1)}</label>
+            <div>
+              <select value={productProperties[p.Name]}
+                      onChange={ev =>
+                        setProductProp(p.Name,ev.target.value)
+                      }
+              >
+                {
+                  p.values.split(',').map(v => (
+                  <option key={v} value={v}>{v}</option>
+                ))
+                }
+              </select>
+            </div>
+          </div>
+        ))
+          }
         <label>about</label>
         <textarea placeholder="descripion" value={about} onChange={ev=>setAbout(ev.target.value)}/>
         <label> price</label>

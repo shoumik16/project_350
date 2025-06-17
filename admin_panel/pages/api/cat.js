@@ -11,25 +11,26 @@ const {method}=req
  }
 
  if (method === 'POST') {
-    const { name, parent } = req.body;
+    const { name, parent,features } = req.body;
 
 const newCat = { name };
 
 if (parent) {
   newCat.parentcat = parent;
 }
-
+newCat.feat=features
 const data = await Cat.create(newCat);
 res.json(data);
 
 }
 if (method === 'PUT') {
-   const { name, parent ,_id} = req.body;
+   const { name, parent ,features,_id} = req.body;
 
 const newCat = { name };
 
 if (parent) {
  newCat.parentcat = parent;
+ newCat.feat=features
 }
 
 const data = await Cat.updateOne({_id},newCat);
