@@ -1,6 +1,7 @@
 import multiparty from 'multiparty';
 import cloudinary from 'cloudinary';
-
+import { mongooseConnect } from 'mongoose';
+import { isAdminRequest } from './auth/[...nextauth]';
 // Configure Cloudinary (using environment variables for security)
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -9,6 +10,8 @@ cloudinary.config({
 });
 
 export default async function handle(req, res) {
+   
+  await isAdminRequest(req,res);
   const form = new multiparty.Form();
 
   form.parse(req, async (err, fields, files) => {
