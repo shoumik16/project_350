@@ -6,20 +6,43 @@ export default function Header()
     const Sh=styled.header`
     background-color: #222;
     `;
+    const Logo = styled(Link)`
+  color:#fff;
+  text-decoration:none;
+  
+`;
+const Wrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 0;
+`;
+ const Nl = styled(Link)`
+  color:#aaa;
+  text-decoration:none;
+  
+`;
+const Ns = styled.nav`
+  display: flex;
+  gap:15px;
+  
+`;
 
     return (
     
             <Sh>
                 <Center>
-<Link href={'/'}>Ecommerce</Link>
-           
-            <nav>
-                 <Link href={'/'}>Ecommerce</Link>
-                  <Link href={'/products'}>Ecommerce</Link>
-                   <Link href={'/categories'}>Ecommerce</Link>
-                    <Link href={'/account'}>Ecommerce</Link>
-                     <Link href={'/cart(0)'}>Ecommerce</Link>
-            </nav>
+                    <Wrapper>
+            <Logo href={'/'}>Ecommerce</Logo>
+                   <Ns>
+                   <Nl href={'/'}>Home</Nl>
+                   <Nl href={'/products'}>Products</Nl>
+                   <Nl href={'/categories'}>Categories</Nl>
+                    <Nl href={'/account'}>Account</Nl>
+                     <Nl href={'/cart(0)'}>Cart</Nl>
+
+                      </Ns>
+                      </Wrapper>
+
                 </Center>
                 
              </Sh>
