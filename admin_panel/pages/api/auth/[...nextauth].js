@@ -22,9 +22,7 @@ export const auth = {
   adapter: MongoDBAdapter(clientPromise),
   callbacks: {
     async jwt({ token, user,account }) {
-      // On first login, store user's email in token
-      console.log('[JWT CALLBACK]');
-    console.log('user:', user);
+      
       if (user?.email) {
         token.email = user.email.toLowerCase();
       }
@@ -34,7 +32,7 @@ export const auth = {
       // Use token.email to ensure consistency
       console.log('[SESSION CALLBACK]');
     console.log('session before modification:', session);
-    console.log('tokennn:', token);
+   // console.log('tokennn:', token);
        const email = token?.email?.toLowerCase() || session?.user?.email?.toLowerCase() || '';
 
       if (emails.includes(email)) {
@@ -49,7 +47,7 @@ export const auth = {
     async signIn({ user, account, profile }) {
     const email = user?.email?.toLowerCase();
     const allowed = emails.includes(email);
-    console.log('[SIGNIN CALLBACK] Email:', email, '| Allowed:', allowed);
+    //console.log('[SIGNIN CALLBACK] Email:', email, '| Allowed:', allowed);
     return allowed;
   }
    

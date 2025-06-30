@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Center from "./Center";
 import Button from "./Button";
-export default function Featured(){
+export default function Featured({featuredProduct}){
     const Bg = styled.div`
   background-color: #222;
   color:#fff;
@@ -43,12 +43,13 @@ const Column = styled.div`
         <Column>
         <div>
       <Title>
-            PRO
+            {featuredProduct.name}
                 </Title>
                 <Desc>
             rtr uytfytfytd tydytdytd ytdjytdjyt hgfytdjdjtrd gftrtrdjtrd fdtdjtrdjtrd grdjtdjdjtd htjytdjdyt yftff tftftf tftftft yfftf tftftf tftftf tftftf ccttctc gvtc ygyggyg ygygygyg gvygyy  vyyy ygygygyg
             </Desc>
             <Br>
+            
             <Button size="l">Read more</Button>
             <Button primary size="l">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" >
