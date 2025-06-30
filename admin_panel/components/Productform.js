@@ -23,14 +23,26 @@ export default function Productform({
     const[categories,setCategories]=useState([])
      const [productProperties,setProductProperties] = useState(assignedProps || {});
     const router=useRouter()
-    useEffect(()=>{
-         axios.get('/api/cat').then(res =>{
-                    
-                     setCategories(res.data)
-             })
-    },[])
+    useEffect(() => {
+    axios.get("/api/cat").then((res) => {
+      const normalised = res.data.map((cat) => ({
+        ...cat,
+        feat: cat.feat.map((f) => ({
+          ...f,
+          values: Array.isArray(f.values)
+            ? f.values
+            : (f.values || "").split(","),
+        })),
+      }));
+      setCategories(normalised);                        // 🔄 changed
+    });
+  }, []);
+ 
+
      const prf = [];
-  if (categories.length > 0 && category) {
+  if (categories.length > 0 && category) 
+    {
+
     let Info = categories.find(({_id}) => _id === category);
     prf.push(...Info.feat)
      while(Info?.parentcat?._id) {
@@ -40,14 +52,29 @@ export default function Productform({
     }
     
   }
+
+
+
+ /* useEffect(() => {
+    const defaults = {};
+    prf.forEach((p) => {
+      if (p.values?.length) defaults[p.Name] = p.values[0];
+    });
+    setProductProperties((prev) => ({ ...defaults, ...prev }));
+  }, [category, categories]);*/
+
+
+  
   function setProductProp(propName,value) {
     setProductProperties(prev => {
       const newProductProps = {...prev};
       newProductProps[propName] = value;
+     
       return newProductProps;
     });
-    console.log(productProperties)
+   // console.log(productProperties)
   }
+   
     async function f(ev) 
      {     
         ev.preventDefault()
@@ -55,10 +82,13 @@ export default function Productform({
           
            if(_id)
            {
-            await axios.put('/api/products',{...productInfo,_id,category})
+            
+            await axios.put('/api/products',{...productInfo,_id})
            }
            else
            {
+            console.log("VVVVVVBBBBBBBBB")
+            console.log(productInfo)
             await axios.post('/api/products',productInfo).then(res=>{
               console.log(res.data)                                  
             })
@@ -143,16 +173,18 @@ export default function Productform({
           <div key={p.Name} className="">
             <label>{p.Name[0].toUpperCase()+p.Name.substring(1)}</label>
             <div>
-              <select value={productProperties[p.Name]}
+              <select value={productProperties[p.Name]||""}
                       onChange={ev =>
                         setProductProp(p.Name,ev.target.value)
                       }
               >
-                {
-                  p.values.split(',').map(v => (
-                  <option key={v} value={v}>{v}</option>
-                ))
-                }
+               
+        {p.values.map(v => (
+          <option key={v} value={v}>
+            {v}
+          </option>
+        ))}
+                
               </select>
             </div>
           </div>
