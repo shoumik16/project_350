@@ -24,7 +24,7 @@ useEffect(()=>{
             </tr>
           </thead>
           <tbody>
-            {
+          .  {
               info.map(x=>(
                 <tr>
                   <td>

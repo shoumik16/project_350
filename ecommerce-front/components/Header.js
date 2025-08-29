@@ -4,7 +4,7 @@ import Center from "./Center";
 export default function Header()
 {
     const Sh=styled.header`
-    background-color: #222;
+    background-color: #221;
     `;
     const Logo = styled(Link)`
   color:#fff;
