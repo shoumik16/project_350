@@ -4,7 +4,7 @@ import styled from "styled-components"
 const Pg=styled.div`
 display: grid;
 grid-template-columns: 1fr  1fr  1fr;
-gap: 20px;
+gap: 40px;
 padding-top: 20px;
 `;
 export default function LatestProducts({newProducts}){
