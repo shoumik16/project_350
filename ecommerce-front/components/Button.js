@@ -3,11 +3,16 @@ import styled, { css } from "styled-components";
 
 export const Bs = css`
   border: 0;
-  padding: 5px 15px;
+  padding: 5px 10px;
   border-radius: 5px;
   cursor: pointer;
   text-decoration:none;
 
+   display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  
   ${props => props.size === 'l' && css`
     font-size: 1.2rem;
     padding: 10px 20px;
@@ -23,8 +28,16 @@ export const Bs = css`
 
   ${props => props.primary && css`
     background-color: #5542f6;
+    border:1px solid #5542f6;
     color: #fff;
   `}
+  ${props => props.primary && props.outline && css`
+    background-color: transparent;
+    border:1.2px solid #5542f6;
+    color: #5542f6;
+  `}
+
+
 `;
 
 export const Sb = styled.button`

@@ -23,6 +23,6 @@ const StyledLink = styled(Link)`
   ${Bs}
 `;
 
-export default function ButtonLink(props) {
+export default function ButtonLink (props) {
   return <StyledLink {...props} />;
 }
